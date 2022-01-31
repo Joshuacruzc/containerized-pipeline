@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  site:
+    build:
+      dockerfile: techrum.jenkins.Dockerfile
+      context: .
+    networks:
+      default:
+        aliases:
+          - techrum.jenkins.com
+    ports:
+      - "8080:8080"
+      - "5001:5000"
+    container_name: jenkins-server
+    privileged: true
+    user: jenkins
+    volumes:
+      - "./jenkins_home:/var/jenkins_home"
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  default:
+    external:
+      # This is an external docker network created in
+      # the host machine, so that jenkins may communicate
+      # with other containers
+      name: techrum_pipeline_network

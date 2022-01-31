@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  svn-server:
+    image: elleflorio/svn-server
+    ports:
+      - 5200:80
+      - 3690:3690
+    volumes:
+      - svn-data:/home/svn
+networks:
+  default:
+    external:
+      # This is an external docker network created in
+      # the host machine, so that subversion may communicate
+      # with other containers
+      name: techrum_pipeline_network
+volumes:
+    svn-data:
